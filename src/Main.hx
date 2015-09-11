@@ -17,9 +17,9 @@ class Main {
     var startDate = Date.fromString(args[0] + ":00");
     var endDate = Date.fromString(args[1] + ":00");
 
-    var workTime = (endDate.getTime() - startDate.getTime()) / 1000 / 60 / 60;
+    var workTime = round((endDate.getTime() - startDate.getTime()) / 1000 / 60 / 60);
     var pause = calculatePause(workTime);
-    var workingTime = subtractPause(workTime);
+    var workingTime = round(subtractPause(workTime));
     var overtime = calculateOvertime(workingTime);
 
     Sys.println('Arbeitszeit von ${startDate} bis ${endDate}');
@@ -27,6 +27,10 @@ class Main {
     Sys.println('Pause           : ${pause}h (${ct(pause)})');
     Sys.println('Arbeitszeit     : ${workingTime}h (${ct(workingTime)})');
     Sys.println('Bilanz          : ${overtime}h (${ct(overtime)})');
+  }
+
+  private function round(v: Float, ?precision:Int = 2):Float {
+    return Math.round( v * Math.pow(10, precision) ) / Math.pow(10, precision);
   }
 
   private function ct(time: Float):String {
